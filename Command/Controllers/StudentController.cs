@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Command.Controllers
 {
-    // api/student
+    
     [Route("/api/student")]
     [ApiController]
     public class StudentController : Controller
@@ -33,7 +33,7 @@ namespace Command.Controllers
             return Ok(_mapper.Map<IEnumerable<StudentReadDto>>(stus));
         }
 
-        //Get api/student/{id}
+       
         [HttpGet("{id}",Name="GetStudentbyId")]
         public ActionResult<StudentReadDto> GetStudentbyId(int id)
         {
@@ -52,7 +52,7 @@ namespace Command.Controllers
             _studentrepo.CreateStudent(stu);
             _studentrepo.SaveChanges();
             var sturead = _mapper.Map<StudentReadDto>(stu);
-            //return Ok(_mapper.Map<StudentReadDto>(stu));
+          
             return CreatedAtRoute(nameof(GetStudentbyId), new { id = sturead.Id }, sturead);
         }
         [HttpPut("{id}")]
@@ -90,7 +90,12 @@ namespace Command.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteStudent(int id)
         {
-            _studentrepo.DeleteStudent(id);
+            var stu = _studentrepo.GetStudentbyId(id);
+            if (stu == null)
+            {
+                return NotFound();
+            }
+            _studentrepo.DeleteStudent(stu);
             _studentrepo.SaveChanges();
             return Ok();
         }

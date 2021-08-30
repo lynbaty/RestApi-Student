@@ -18,7 +18,7 @@ namespace Command.Data
         bool SaveChanges();
         void UpdateStudent(Student updateStudent);
 
-        void DeleteStudent(int id);
+        void DeleteStudent(Student stu);
 
 
 

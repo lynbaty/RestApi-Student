@@ -26,11 +26,13 @@ namespace Command.Data
             
         }
 
-        public void DeleteStudent(int id)
+        public void DeleteStudent(Student Stu)
         {
-            var stu = _context.Students.Where(s => s.Id == id).FirstOrDefault();
-
-            _context.Students.Remove(stu);
+            if (Stu == null)
+            {
+                throw new ArgumentNullException(nameof(Stu));
+            }
+            _context.Students.Remove(Stu);
 
         }
 
